@@ -14,7 +14,7 @@ public class MatrixExponentiation {
             return identityMatrix(A);
         }
 
-        int[][] X = power(A,n/2);
+        int[][] X = powerIterative(A,n/2);
 
         if(n%2==0){
             return mul(X,X);
@@ -22,6 +22,18 @@ public class MatrixExponentiation {
             return mul(X,mul(X,A));
         }
 
+    }
+
+    private static int[][] powerIterative(int[][] A, int n){
+        int[][] result = identityMatrix(A);
+        while(n>0) {
+            if((n&1)==1){
+                result = mul(result,A);
+            }
+            n>>=1;
+            A = mul(A,A);
+        }
+        return result;
     }
 
     private static int[][] identityMatrix(int[][] a) {
